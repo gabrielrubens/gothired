@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_10_202348) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_10_210254) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -50,7 +50,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_10_202348) do
   end
 
   create_table "job_posts", force: :cascade do |t|
-    t.string "tittle"
+    t.string "title"
     t.float "match_score"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
