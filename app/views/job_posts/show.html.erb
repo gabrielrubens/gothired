@@ -1,0 +1,14 @@
+<%# <% content_for :title, @job_post.title %>
+
+<h1><%= @job_post.title %></h1>
+
+<p>Match Score: <%= @job_post.match_score %></p>
+
+<div>
+    <%= @job_post.description.to_s.html_safe %>
+</div>
+
+
+<div>
+    <%= link_to "Cancel", job_posts_path %>
+</div>
