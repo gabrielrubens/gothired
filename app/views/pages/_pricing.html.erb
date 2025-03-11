@@ -1,0 +1,58 @@
+<section id="pricing" class="py-5">
+  <div class="container">
+    <h2 class="text-center mb-5">Simple, Transparent Pricing</h2>
+    <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
+      <div class="col">
+        <div class="card mb-4 rounded-3 shadow-sm">
+          <div class="card-header py-3">
+            <h3 class="my-0 fw-normal">Free</h3>
+          </div>
+          <div class="card-body">
+            <h2 class="card-title">$0<small class="text-muted fw-light">/mo</small></h2>
+            <ul class="list-unstyled mt-3 mb-4">
+              <li>5 job matches per month</li>
+              <li>Basic resume analysis</li>
+              <li>Standard match algorithm</li>
+              <li>Community support</li>
+            </ul>
+            <%= button_to "Sign up for free", "#email-signup", class: "w-100 btn btn-lg btn-outline-primary", data: { turbo_frame: "email_form" } %>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card mb-4 rounded-3 shadow-sm border-primary">
+          <div class="card-header py-3 text-white bg-primary border-primary">
+            <h3 class="my-0 fw-normal">Pro</h3>
+          </div>
+          <div class="card-body">
+            <h2 class="card-title">$9<small class="text-muted fw-light">/mo</small></h2>
+            <ul class="list-unstyled mt-3 mb-4">
+              <li>Unlimited job matches</li>
+              <li>Advanced resume analysis</li>
+              <li>Priority match algorithm</li>
+              <li>Email support</li>
+            </ul>
+            <%= button_to "Join waitlist", "#email-signup", class: "w-100 btn btn-lg btn-primary", data: { turbo_frame: "email_form" } %>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card mb-4 rounded-3 shadow-sm">
+          <div class="card-header py-3">
+            <h3 class="my-0 fw-normal">Premium</h3>
+          </div>
+          <div class="card-body">
+            <h2 class="card-title">$19<small class="text-muted fw-light">/mo</small></h2>
+            <ul class="list-unstyled mt-3 mb-4">
+              <li>All Pro features</li>
+              <li>AI cover letter generation</li>
+              <li>Interview preparation</li>
+              <li>Priority support</li>
+            </ul>
+            <%= button_to "Join waitlist", "#email-signup", class: "w-100 btn btn-lg btn-outline-primary", data: { turbo_frame: "email_form" } %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
