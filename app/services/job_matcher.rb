@@ -3,7 +3,9 @@ class JobMatcher
     @gemini = gemini || GeminiService.new
   end
 
-  def match_percentage(cv_text, job_description)
+  def match_percentage(cv_path, job_description)
+    cv_text = get_cv_text(cv_path)
+    job_description = get_job_description(job_description)
     response = @gemini.generate_content(get_prompt(cv_text, job_description))
 
     p "RESPONDE IS: #{response}"
@@ -11,6 +13,14 @@ class JobMatcher
   end
 
   private
+
+  def get_cv_text(cv_path)
+    Pdf::Extractor.call(Rails.root.join(cv_path))
+  end
+
+  def get_job_description(job_description)
+    File.read(Rails.root.join(job_description))
+  end
 
   def get_prompt(cv_text, job_description)
     prompt = <<~PROMPT
