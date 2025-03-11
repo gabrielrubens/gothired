@@ -70,3 +70,10 @@ group :test do
   # gem "webmock"
   # gem "rspec"
 end
+
+# Bootstrap
+gem "bootstrap", "~> 5.3"
+gem "popper_js", "~> 2.11"
+gem 'sassc-rails'
+
+# Bootstrap
