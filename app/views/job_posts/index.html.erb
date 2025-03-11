@@ -1,0 +1,21 @@
+<h1>Job Posts</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Match Score</th>
+            <th colspan="1"></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <% @job_posts.each do |job_post| %>
+            <tr>
+                <td><%= job_post.title %></td>
+                <td><%= job_post.match_score %></td>
+                <td><%= link_to 'Show', job_post %></td>
+            </tr>
+        <% end %>
+    </tbody>
+</table>
