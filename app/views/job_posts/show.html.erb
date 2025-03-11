@@ -1,21 +1,8 @@
 <%# <% content_for :title, @job_post.title %>
 
+<h1><%= @job_post.title %></h1>
 
-<% if @job_post %>
-  
-
-    <h1><%= @job_post.title %></h1>
-
-    <p>Match Score: <%= @job_post.match_score %></p>
-
-    <div>
-        <%= @job_post.description.to_s.html_safe %>
-    </div>
-
-<% else %>
-  <p>Job post not found.</p>
-<% end %>
-
+<p>Match Score: <%= @job_post.match_score %></p>
 
 <div>
     <%= link_to "Cancel", job_posts_path %>
