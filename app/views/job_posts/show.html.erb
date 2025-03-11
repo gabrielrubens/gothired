@@ -1,12 +1,20 @@
 <%# <% content_for :title, @job_post.title %>
 
-<h1><%= @job_post.title %></h1>
 
-<p>Match Score: <%= @job_post.match_score %></p>
+<% if job_post %>
+  <%= job_post.description.to_s %>
 
-<div>
-    <%= @job_post.description.to_s.html_safe %>
-</div>
+    <h1><%= @job_post.title %></h1>
+
+    <p>Match Score: <%= @job_post.match_score %></p>
+
+    <div>
+        <%= @job_post.description.to_s.html_safe %>
+    </div>
+
+<% else %>
+  <p>Job post not found.</p>
+<% end %>
 
 
 <div>
