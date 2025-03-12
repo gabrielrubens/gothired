@@ -35,6 +35,11 @@ jobs:
           ruby-version: .ruby-version
           bundler-cache: true
 
+      - name: Enable Corepack and prepare Yarn 4.7.0
+        run: |
+          corepack enable
+          corepack prepare yarn@4.7.0 --activate
+
       - name: Scan for security vulnerabilities in JavaScript dependencies
         run: bin/importmap audit
 
@@ -49,6 +54,11 @@ jobs:
         with:
           ruby-version: .ruby-version
           bundler-cache: true
+
+      - name: Enable Corepack and prepare Yarn 4.7.0
+        run: |
+          corepack enable
+          corepack prepare yarn@4.7.0 --activate
 
       - name: Lint code for consistent style
         run: bin/rubocop -f github
@@ -74,6 +84,11 @@ jobs:
         with:
           ruby-version: .ruby-version
           bundler-cache: true
+
+      - name: Enable Corepack and prepare Yarn 4.7.0
+        run: |
+          corepack enable
+          corepack prepare yarn@4.7.0 --activate
 
       - name: Run tests
         env:
