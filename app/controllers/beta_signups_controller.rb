@@ -1,6 +1,5 @@
 class BetaSignupsController < ApplicationController
   def create
-    
     @beta_signup = BetaSignup.new(beta_signup_params)
 
     if @beta_signup.save
@@ -14,7 +13,6 @@ class BetaSignupsController < ApplicationController
         format.js   { render :create }
       end
     end
-
   end
 
   private

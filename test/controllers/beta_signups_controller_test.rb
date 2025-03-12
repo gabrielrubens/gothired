@@ -11,10 +11,9 @@ class BetaSignupsControllerTest < ActionDispatch::IntegrationTest
   # end
 
   test "should create beta signup" do
-    assert_difference('BetaSignup.count') do
-      post beta_signups_url, params: { beta_signup: { email: 'test@example.com' } }, xhr: true
+    assert_difference("BetaSignup.count") do
+      post beta_signups_url, params: { beta_signup: { email: "test@example.com" } }, xhr: true
     end
     assert_response :success
   end
-
 end
