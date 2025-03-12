@@ -9,3 +9,4 @@ pin "trix"
 pin "@rails/actiontext", to: "actiontext.esm.js"
 pin "bootstrap" # @5.3.3
 pin "@popperjs/core", to: "@popperjs--core.js" # @2.11.8
+pin "bootstrap", to: "bootstrap.bundle.min.js"

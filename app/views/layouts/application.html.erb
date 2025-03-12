@@ -25,7 +25,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     
     <%# Includes all stylesheet files in app/assets/stylesheets %>
-    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag :all, "data-turbo-track": "reload" %>
+
     <%= javascript_importmap_tags %>
     
     <%# Google Analytics (Replace UA-XXXXX-Y with your actual ID) %>
@@ -38,6 +39,7 @@
       gtag('config', 'G-XXXXXXXX');
     </script>
     <% end %>
+    <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
   </head>
 
   <body class="<%= controller_name %> <%= action_name %>">

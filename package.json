@@ -1,0 +1,37 @@
+{
+  "name": "gothired",
+  "private": true,
+  "dependencies": {
+    "@hotwired/stimulus": "^3.2.2",
+    "@hotwired/stimulus-webpack-helpers": "^1.0.1",
+    "@hotwired/turbo-rails": "^8.0.13",
+    "@popperjs/core": "^2.11.8",
+    "@rails/actiontext": "^8.0.200",
+    "autoprefixer": "^10.4.21",
+    "bootstrap": "^5.3.3",
+    "bootstrap-icons": "^1.11.3",
+    "esbuild": "^0.25.1",
+    "nodemon": "^3.1.9",
+    "postcss": "^8.5.3",
+    "postcss-cli": "^11.0.0",
+    "sass": "^1.85.1",
+    "trix": "^2.1.13"
+  },
+  "scripts": {
+    "build": "yarn build:js && yarn build:css",
+    "build:css": "yarn build:css:compile && yarn build:css:prefix",
+    "build:css:compile": "sass ./app/assets/stylesheets/application.bootstrap.scss:./app/assets/builds/application.css --no-source-map --load-path=node_modules",
+    "build:css:prefix": "postcss ./app/assets/builds/application.css --use=autoprefixer --output=./app/assets/builds/application.css",
+    "build:js": "esbuild app/javascript/*.* --bundle --sourcemap --outdir=app/assets/builds",
+    "watch:css": "yarn build:css --watch"
+  },
+  "browserslist": [
+    "defaults"
+  ],
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/gabrielrubens/gothired.git",
+  "author": "Gabriel Rubens <gabrielrubens@gmail.com>",
+  "license": "MIT",
+  "packageManager": "yarn@4.7.0+sha512.5a0afa1d4c1d844b3447ee3319633797bcd6385d9a44be07993ae52ff4facabccafb4af5dcd1c2f9a94ac113e5e9ff56f6130431905884414229e284e37bb7c9"
+}
