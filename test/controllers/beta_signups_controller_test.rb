@@ -2,7 +2,7 @@ require "test_helper"
 
 class BetaSignupsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    #@beta_signups = beta_signups(:one)
+    # @beta_signups = beta_signups(:one)
   end
 
   # test "should get create" do
