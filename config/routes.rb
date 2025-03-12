@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get "beta_signups/create"
+  get "pages/home"
   get "job_posts/index"
   get "job_posts/show"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
@@ -13,5 +15,7 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
+  root "pages#home"
   resources :job_posts, only: [ :index, :show ]
+  resources :beta_signups, only: [ :create ]
 end

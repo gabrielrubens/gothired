@@ -1,0 +1,24 @@
+<section id="email-signup" class="py-5 bg-gradient-primary text-white">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8 text-center">
+        <h2 class="mb-4">Join Our Beta Program</h2>
+        <p class="mb-4">Be among the first to try GotHired.ai and receive exclusive early access benefits.</p>
+        
+        <%= turbo_frame_tag "email_form" do %>
+          <%= form_with url: beta_signups_path, class: "row g-3 justify-content-center", data: { controller: "signup", action: "turbo:submit-end->signup#handleSubmit" } do |form| %>
+            <div class="col-md-8">
+              <%= form.email_field :email, class: "form-control form-control-lg", placeholder: "Your email address", required: true %>
+            </div>
+            <div class="col-md-auto">
+              <%= form.submit "Get Early Access", class: "btn btn-light btn-lg w-100" %>
+            </div>
+            <div class="col-12">
+              <div class="form-text text-light opacity-75">We respect your privacy and will never share your information.</div>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,40 @@
+/* app/assets/stylesheets/custom.css */
+/* Custom styling for GotHired.ai */
+
+:root {
+    --primary: #3a86ff;
+    --secondary: #8338ec;
+  }
+  
+  /* Hero section gradient */
+  .bg-gradient-primary {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+  }
+  
+  /* Feature icons */
+  .feature-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 4rem;
+    height: 4rem;
+    border-radius: 0.75rem;
+    font-size: 1.5rem;
+  }
+  
+  /* Fix for spacing in forms */
+  .gap-3 {
+    gap: 1rem;
+  }
+  
+  /* Custom badge styling */
+  .badge-lg {
+    font-size: 0.9rem;
+    padding: 0.35em 0.65em;
+  }
+  
+  /* Image shadow */
+  .shadow-lg {
+    box-shadow: 0 1rem 3rem rgba(0,0,0,.175);
+  }
+  
