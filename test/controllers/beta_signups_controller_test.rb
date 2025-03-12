@@ -6,7 +6,7 @@ class BetaSignupsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should get create" do
-    get beta_signups_create_url
+    get beta_signups_create_url(@beta_signups)
     assert_response :success
   end
 end
