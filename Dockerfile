@@ -14,10 +14,22 @@ FROM docker.io/library/ruby:$RUBY_VERSION-slim AS base
 # Rails app lives here
 WORKDIR /rails
 
-# Install base packages
+# Install base packages - Force rebuild on: 2025-03-14
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y curl libjemalloc2 libvips sqlite3 && \
+    apt-get install --no-install-recommends -y \
+    curl \
+    libjemalloc2 \
+    libvips \
+    sqlite3 \
+    libyaml-dev \
+    pkg-config && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
+
+# Install Node.js and Yarn
+RUN curl -sL https://deb.nodesource.com/setup_18.x | bash - && \
+    apt-get install -y nodejs && \
+    npm install --global yarn && \
+    corepack enable
 
 # Set production environment
 ENV RAILS_ENV="production" \
@@ -30,8 +42,18 @@ FROM base AS build
 
 # Install packages needed to build gems
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y build-essential git pkg-config && \
+    apt-get install --no-install-recommends -y \
+    build-essential \
+    git \
+    libyaml-dev \
+    pkg-config \
+    libpq-dev \
+    libssl-dev \
+    zlib1g-dev && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
+
+# Ensure the correct version of psych is installed before bundling
+RUN gem install psych -v '5.2.3'
 
 # Install application gems
 COPY Gemfile Gemfile.lock ./
@@ -42,14 +64,14 @@ RUN bundle install && \
 # Copy application code
 COPY . .
 
+# Enable Corepack and install JavaScript dependencies
+RUN corepack enable && yarn install
+
 # Precompile bootsnap code for faster boot times
 RUN bundle exec bootsnap precompile app/ lib/
 
 # Precompiling assets for production without requiring secret RAILS_MASTER_KEY
 RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
-
-
-
 
 # Final stage for app image
 FROM base
