@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :users
   get "beta_signups/create"
   get "pages/home"
   get "job_posts/index"
