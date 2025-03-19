@@ -44,12 +44,14 @@
 
   <body class="<%= controller_name %> <%= action_name %>">
     <header>
-      <% if content_for?(:header) %>
-        <%= yield :header %>
-      <% end %>
+      <%# if content_for?(:header) %>
+        <%#= yield :header %>
+      <%# end %>
+      <%= render 'layouts/partials/header' %>
     </header>
 
-    <main class="container mt-3">
+    <%# <main class="container mt-3"> %>
+    <main>
       <% if notice %>
         <div class="alert alert-success alert-dismissible fade show" role="alert">
           <%= notice %>
