@@ -43,3 +43,15 @@
   <meta name="twitter:description" content="<%= truncate(strip_tags(@blog_post.content), length: 160) %>">
   <meta name="twitter:image" content="<%= @blog_post.cover_image %>">
 <% end %>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    if (typeof gtag === "function") {
+      gtag("event", "blog_post_view", {
+        event_category: "Blog",
+        event_label: "<%= @blog_post.title %>",
+        value: 1
+      });
+    }
+  });
+</script>
