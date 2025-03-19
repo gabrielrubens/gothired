@@ -1,0 +1,24 @@
+<%= render 'layouts/partials/hero', title: @blog_post.title, subtitle: "#{@blog_post.published_at.strftime('%B %d, %Y')} · #{@blog_post.reading_time} min read" %>
+
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <% if @blog_post.cover_image.present? %>
+        <img src="<%= @blog_post.cover_image %>" class="img-fluid mb-4 rounded" alt="<%= @blog_post.title %>">
+      <% end %>
+
+      <div class="text-muted mb-3">
+        <strong>Category:</strong> <%= @blog_post.category %> |
+        <strong>Tags:</strong> <%= @blog_post.tags&.join(", ") %>
+      </div>
+
+      <div class="blog-content">
+        <%= @blog_post.content %>
+      </div>
+
+      <div class="mt-5">
+        <%= link_to "Back to Blog", blog_index_path, class: "btn btn-outline-secondary" %>
+      </div>
+    </div>
+  </div>
+</div>

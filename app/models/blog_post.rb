@@ -7,6 +7,11 @@ class BlogPost < ApplicationRecord
   before_validation :generate_slug, on: :create
   before_save :calculate_reading_time
 
+  # Ensure `tags` is always an array when reading from the database
+  def tags
+    super.is_a?(String) ? JSON.parse(super) : super
+  end
+
   private
 
   def generate_slug
