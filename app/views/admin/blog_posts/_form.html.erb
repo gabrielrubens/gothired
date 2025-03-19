@@ -1,0 +1,35 @@
+<%= form_with(model: [:admin, @blog_post], local: true) do |form| %>
+  <div class="mb-3">
+    <%= form.label :title, class: "form-label" %>
+    <%= form.text_field :title, class: "form-control", required: true %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :content, class: "form-label" %>
+    <%= form.text_area :content, class: "form-control", rows: 8, required: true %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :category, class: "form-label" %>
+    <%= form.text_field :category, class: "form-control", required: true %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :tags, class: "form-label" %>
+    <%= form.text_field :tags, value: @blog_post.tags&.join(", ") || "", class: "form-control", placeholder: "Separate tags with commas" %>
+
+
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :cover_image, class: "form-label" %>
+    <%= form.text_field :cover_image, class: "form-control", placeholder: "Image URL" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :published_at, "Publish Date (leave blank for draft)", class: "form-label" %>
+    <%= form.datetime_local_field :published_at, class: "form-control" %>
+  </div>
+
+  <%= form.submit "Save", class: "btn btn-primary" %>
+<% end %>

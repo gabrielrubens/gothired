@@ -27,6 +27,6 @@ Rails.application.routes.draw do
 
   # Blog Admin routes
   namespace :admin do
-    resources :blog_posts
+    resources :blog_posts, except: [ :show ]
   end
 end

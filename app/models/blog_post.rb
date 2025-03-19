@@ -5,12 +5,7 @@ class BlogPost < ApplicationRecord
   validates :slug, uniqueness: true
 
   before_validation :generate_slug, on: :create
-  before_save :calculate_reading_time
-
-  # Ensure `tags` is always an array when reading from the database
-  def tags
-    super.is_a?(String) ? JSON.parse(super) : super
-  end
+  before_save :ensure_tags_array
 
   private
 
@@ -22,5 +17,10 @@ class BlogPost < ApplicationRecord
     words_per_minute = 200
     total_words = content.split.size
     self.reading_time = (total_words / words_per_minute.to_f).ceil
+  end
+
+  def ensure_tags_array
+    self.tags = tags.is_a?(Array) ? tags : tags.to_s.split(",").map(&:strip)
+    # self.tags = tags.is_a?(Array) ? tags : tags.to_s.split(",").map(&:strip).reject(&:blank?)
   end
 end

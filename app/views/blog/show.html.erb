@@ -10,7 +10,12 @@
 
       <div class="text-muted mb-3">
         <strong>Category:</strong> <%= @blog_post.category %> |
-        <strong>Tags:</strong> <%= @blog_post.tags&.join(", ") %>
+        <% if @blog_post.tags.present? && @blog_post.tags.any? %>
+          <strong>Tags:</strong> <%= @blog_post.tags.join(", ") %>
+        <% else %>
+          <strong>Tags:</strong> No tags available.
+        <% end %>
+
       </div>
 
       <hr>
