@@ -57,15 +57,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_19_081845) do
   end
 
   create_table "blog_posts", force: :cascade do |t|
-    t.string "title"
-    t.string "slug"
-    t.text "content"
+    t.string "title", null: false
+    t.string "slug", null: false
+    t.text "content", null: false
     t.string "cover_image"
     t.integer "reading_time"
-    t.boolean "featured"
+    t.boolean "featured", default: false
     t.string "category"
-    t.integer "user_id", null: false
+    t.json "tags", default: []
     t.datetime "published_at"
+    t.integer "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["category"], name: "index_blog_posts_on_category"
