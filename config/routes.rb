@@ -19,4 +19,9 @@ Rails.application.routes.draw do
   root "pages#home"
   resources :job_posts, only: [ :index, :show ]
   resources :beta_signups, only: [ :create ]
+
+  # Blog Admin routes
+  namespace :admin do
+    resources :blog_posts
+  end
 end
