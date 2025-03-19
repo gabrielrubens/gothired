@@ -1,0 +1,37 @@
+.blog-content {
+    font-family: "Georgia", serif;
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: #333;
+    
+    h1, h2, h3, h4, h5, h6 {
+      font-weight: bold;
+      margin-top: 1.5rem;
+    }
+  
+    p {
+      margin-bottom: 1rem;
+    }
+  
+    img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      margin: 20px 0;
+    }
+  
+    pre {
+      background: #f5f5f5;
+      padding: 10px;
+      border-radius: 5px;
+      overflow-x: auto;
+    }
+  
+    code {
+      font-family: "Courier New", monospace;
+      background: #f5f5f5;
+      padding: 2px 5px;
+      border-radius: 4px;
+    }
+  }
+  

@@ -8,7 +8,7 @@
           <%= link_to image_tag(post.cover_image, class: "card-img-top"), blog_path(post.slug) if post.cover_image.present? %>
           <div class="card-body">
             <h5 class="card-title"><%= link_to post.title, blog_path(post.slug) %></h5>
-            <p class="card-text"><%= truncate(post.content, length: 150) %></p>
+            <p><%= strip_tags(markdown(post.content)).truncate(200) %></p>
             <p class="text-muted small">
               <%= post.published_at.strftime("%B %d, %Y") %> | 
               <%= pluralize(post.reading_time, "min") %> read

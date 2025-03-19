@@ -81,3 +81,5 @@ gem "popper_js", "~> 2.11"
 # Bootstrap
 
 gem "devise", "~> 4.9"
+
+gem "redcarpet", "~> 3.6"

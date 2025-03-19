@@ -3,8 +3,9 @@
 <div class="container py-5">
   <div class="row justify-content-center">
     <div class="col-lg-8">
+      
       <% if @blog_post.cover_image.present? %>
-        <img src="<%= @blog_post.cover_image %>" class="img-fluid mb-4 rounded" alt="<%= @blog_post.title %>">
+        <img src="<%= @blog_post.cover_image %>" class="img-fluid mb-4 rounded shadow" alt="<%= @blog_post.title %>">
       <% end %>
 
       <div class="text-muted mb-3">
@@ -12,13 +13,28 @@
         <strong>Tags:</strong> <%= @blog_post.tags&.join(", ") %>
       </div>
 
-      <div class="blog-content">
-        <%= @blog_post.content %>
+      <hr>
+
+      <div class="blog-content text-body">
+        <%= markdown(@blog_post.content) %>
       </div>
 
+      <hr>
+
       <div class="mt-5">
-        <%= link_to "Back to Blog", blog_index_path, class: "btn btn-outline-secondary" %>
+        <%= link_to "← Back to Blog", blog_index_path, class: "btn btn-outline-secondary" %>
       </div>
     </div>
   </div>
 </div>
+
+<% content_for :head do %>
+  <meta property="og:title" content="<%= @blog_post.title %>">
+  <meta property="og:description" content="<%= truncate(strip_tags(@blog_post.content), length: 160) %>">
+  <meta property="og:image" content="<%= @blog_post.cover_image %>">
+  <meta property="og:type" content="article">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="<%= @blog_post.title %>">
+  <meta name="twitter:description" content="<%= truncate(strip_tags(@blog_post.content), length: 160) %>">
+  <meta name="twitter:image" content="<%= @blog_post.cover_image %>">
+<% end %>
