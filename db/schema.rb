@@ -59,7 +59,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_19_081845) do
   create_table "blog_posts", force: :cascade do |t|
     t.string "title", null: false
     t.string "slug", null: false
-    t.text "content", null: false
     t.string "cover_image"
     t.integer "reading_time"
     t.boolean "featured", default: false
@@ -69,6 +68,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_19_081845) do
     t.integer "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "content"
     t.index ["category"], name: "index_blog_posts_on_category"
     t.index ["slug"], name: "index_blog_posts_on_slug", unique: true
     t.index ["user_id"], name: "index_blog_posts_on_user_id"

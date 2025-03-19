@@ -7,6 +7,14 @@ class BlogPost < ApplicationRecord
   before_validation :generate_slug, on: :create
   before_save :ensure_tags_array
 
+  # Scope for published blog posts
+  scope :published, -> { where("published_at IS NOT NULL AND published_at <= ?", Time.current) }
+
+  # Check if post is published
+  def published?
+    published_at.present? && published_at <= Time.current
+  end
+
   private
 
   def generate_slug

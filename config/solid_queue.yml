@@ -1,0 +1,8 @@
+queues:
+  - default
+
+scheduled_tasks:
+  sitemap_refresh:
+    class: "SitemapRefreshJob"
+    cron: "0 0 * * *"
+    queue: default

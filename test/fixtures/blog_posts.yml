@@ -12,12 +12,12 @@ one:
   published_at: 2025-03-19 08:12:43
 
 two:
-  title: MyString
-  slug: MyString
-  content: MyText
-  cover_image: MyString
+  title: MyString2
+  slug: MyString2
+  content: MyText2
+  cover_image: MyString2
   reading_time: 1
   featured: false
-  category: MyString
+  category: MyString2
   user: two
   published_at: 2025-03-19 08:12:43
