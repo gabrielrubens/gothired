@@ -45,3 +45,7 @@
     <% end %>
   </tbody>
 </table>
+
+<div class="d-flex justify-content-center mt-4">
+  <%== pagy_bootstrap_combo_nav_js(@pagy) if @blog_posts.present?  %>
+</div>

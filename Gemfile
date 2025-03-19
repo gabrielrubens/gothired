@@ -83,3 +83,5 @@ gem "popper_js", "~> 2.11"
 gem "devise", "~> 4.9"
 
 gem "redcarpet", "~> 3.6"
+
+gem "pagy", "~> 9.3"

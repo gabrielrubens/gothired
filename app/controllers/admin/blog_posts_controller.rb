@@ -1,4 +1,6 @@
 class Admin::BlogPostsController < ApplicationController
+  include Pagy::Backend
+
   before_action :authenticate_user! # Ensures only logged-in users can access
   before_action :set_blog_post, only: %i[edit update destroy]
 
@@ -24,8 +26,10 @@ class Admin::BlogPostsController < ApplicationController
     when "featured"
       @blog_posts = @blog_posts.where(featured: true).order(created_at: :desc)
     else
-      @blog_posts = @blog_posts.order(created_at: :desc) # Default: Newest First
+      @blog_posts = @blog_posts.order(created_at: :desc)
     end
+
+    @pagy, @blog_posts = pagy(@blog_posts, items: 10)
   end
 
 
