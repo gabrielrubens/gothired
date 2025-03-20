@@ -64,5 +64,5 @@ jobs:
 
       - name: 🚀 Deploy using Kamal
         env:
-          KAMAL_ENV: ${{ github.ref == 'refs/heads/main' ? 'production' : 'staging' }}
+          KAMAL_ENV: "${{ github.ref == 'refs/heads/main' ? 'production' : 'staging' }}"
         run: bin/kamal deploy
