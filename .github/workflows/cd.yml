@@ -66,10 +66,12 @@ jobs:
         if: github.ref == 'refs/heads/main'
         env:
           KAMAL_ENV: production
+          DOMAIN: ${{ secrets.PRODUCTION_DOMAIN }}
         run: bin/kamal deploy
 
       - name: 🚀 Deploy to Staging
         if: github.ref != 'refs/heads/main'
         env:
           KAMAL_ENV: staging
+          DOMAIN: ${{ secrets.STAGING_DOMAIN }}
         run: bin/kamal deploy
