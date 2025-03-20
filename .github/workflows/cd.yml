@@ -31,14 +31,17 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H $VPS_HOST >> ~/.ssh/known_hosts
 
-      - name: 📦 Install Kamal
-        # run: gem install kamal
-        # - name: Install Kamal
-        # run: gem install --user-install kamal # Use this if you don't have sudo access
+      - name: 📦 Install Ruby and Bundler
         run: |
           export GEM_HOME="$HOME/.gem"
           export PATH="$GEM_HOME/bin:$PATH"
+          gem install bundler -v '~> 2.6'
+          echo "$HOME/.gem/bin" >> $GITHUB_PATH
+
+      - name: 📦 Install Kamal
+        run: |
           gem install kamal
+          echo "$HOME/.gem/bin" >> $GITHUB_PATH
 
       - name: 🚀 Deploy to Environment
         run: |
