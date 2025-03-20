@@ -13,6 +13,9 @@ FROM docker.io/library/ruby:$RUBY_VERSION-slim AS base
 # Rails app lives here
 WORKDIR /rails
 
+# Install correct Bundler version
+RUN gem install bundler -v "~> 2.6"
+
 # Install base packages - Force rebuild on: 2025-03-14
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y \
@@ -34,9 +37,6 @@ RUN curl -sL https://deb.nodesource.com/setup_18.x | bash - && \
     apt-get install -y nodejs && \
     npm install --global yarn && \
     corepack enable
-
-# Install correct Bundler version
-RUN gem install bundler -v "~> 2.6"
 
 # Set production environment
 ENV RAILS_ENV="production" \
