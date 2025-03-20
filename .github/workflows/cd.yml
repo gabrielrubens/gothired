@@ -32,7 +32,7 @@ jobs:
           ssh-keyscan -H $VPS_HOST >> ~/.ssh/known_hosts
 
       - name: 📦 Install Kamal
-        run: gem install kamal
+        # run: gem install kamal
         # - name: Install Kamal
         # run: gem install --user-install kamal # Use this if you don't have sudo access
         run: |
