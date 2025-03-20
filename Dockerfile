@@ -22,7 +22,12 @@ RUN apt-get update -qq && \
     libvips \
     sqlite3 \
     libyaml-dev \
-    pkg-config && \
+    pkg-config \
+    build-essential \
+    git \
+    libpq-dev \
+    libssl-dev \
+    zlib1g-dev && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Install Node.js and Yarn
@@ -30,6 +35,9 @@ RUN curl -sL https://deb.nodesource.com/setup_18.x | bash - && \
     apt-get install -y nodejs && \
     npm install --global yarn && \
     corepack enable
+
+# Install correct Bundler version
+RUN gem install bundler -v "~> 2.6" && bundle update --bundler
 
 # Set production environment
 ENV RAILS_ENV="production" \
@@ -40,32 +48,19 @@ ENV RAILS_ENV="production" \
 # Throw-away build stage to reduce size of final image
 FROM base AS build
 
-# Install packages needed to build gems
-RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y \
-    build-essential \
-    git \
-    libyaml-dev \
-    pkg-config \
-    libpq-dev \
-    libssl-dev \
-    zlib1g-dev && \
-    rm -rf /var/lib/apt/lists /var/cache/apt/archives
-
 # Ensure the correct version of psych is installed before bundling
 RUN gem install psych -v '5.2.3'
 
 # Install application gems
 COPY Gemfile Gemfile.lock ./
 RUN bundle install && \
-    rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git && \
-    bundle exec bootsnap precompile --gemfile
+    rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git
 
 # Copy application code
 COPY . .
 
-# Enable Corepack and install JavaScript dependencies
-RUN corepack enable && yarn install
+# Ensure JavaScript dependencies are installed
+RUN corepack enable && yarn install --check-files
 
 # Precompile bootsnap code for faster boot times
 RUN bundle exec bootsnap precompile app/ lib/
