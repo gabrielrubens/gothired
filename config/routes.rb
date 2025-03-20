@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  # get "blog/index"
+  # get "blog/show"
+  devise_for :users
   get "beta_signups/create"
   get "pages/home"
   get "job_posts/index"
@@ -18,4 +21,12 @@ Rails.application.routes.draw do
   root "pages#home"
   resources :job_posts, only: [ :index, :show ]
   resources :beta_signups, only: [ :create ]
+
+  # Blog Routes
+  resources :blog, only: [ :index, :show ]
+
+  # Blog Admin routes
+  namespace :admin do
+    resources :blog_posts, except: [ :show ]
+  end
 end

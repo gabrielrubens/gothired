@@ -41,3 +41,8 @@
 !/app/assets/builds/.keep
 
 /node_modules
+app/views/.DS_Store
+app/views/pages/.DS_Store
+app/.DS_Store
+.DS_Store
+.DS_Store

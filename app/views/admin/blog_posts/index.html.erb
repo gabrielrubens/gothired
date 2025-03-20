@@ -1,0 +1,51 @@
+<h1>Blog Posts</h1>
+
+<div class="mb-3 d-flex justify-content-between">
+  <div>
+    <%= form_with url: admin_blog_posts_path, method: :get, local: true, class: "d-inline-block me-2" do |form| %>
+      <%= form.label :category, "Filter by Category", class: "form-label me-2" %>
+      <%= form.select :category, BlogPost.pluck(:category).uniq.prepend("All"), { selected: params[:category] }, class: "form-select d-inline-block w-auto", onchange: "this.form.submit()" %>
+    <% end %>
+
+    <%= form_with url: admin_blog_posts_path, method: :get, local: true, class: "d-inline-block" do |form| %>
+      <%= form.label :tag, "Filter by Tag", class: "form-label me-2" %>
+      <%= form.select :tag, BlogPost.all.flat_map(&:tags).uniq.prepend("All"), { selected: params[:tag] }, class: "form-select d-inline-block w-auto", onchange: "this.form.submit()" %>
+    <% end %>
+
+    <%= form_with url: admin_blog_posts_path, method: :get, local: true, class: "d-inline-block" do |form| %>
+    <%= form.label :sort, "Sort by", class: "form-label me-2" %>
+    <%= form.select :sort, [["Newest", "newest"], ["Oldest", "oldest"], ["A-Z", "alphabetical"], ["Featured", "featured"]], { selected: params[:sort] }, class: "form-select d-inline-block w-auto", onchange: "this.form.submit()" %>
+  <% end %>
+
+  </div>
+
+  <%= link_to "New Blog Post", new_admin_blog_post_path, class: "btn btn-primary mb-3" %>
+</div>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Category</th>
+      <th>Published</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @blog_posts.each do |post| %>
+      <tr>
+        <td><%= post.title %></td>
+        <td><%= post.category %></td>
+        <td><%= post.published_at.present? ? post.published_at.strftime("%b %d, %Y") : "Draft" %></td>
+        <td>
+          <%= link_to "Edit", edit_admin_blog_post_path(post), class: "btn btn-sm btn-warning" %>
+          <%= link_to "Delete", admin_blog_post_path(post), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-sm btn-danger" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<div class="d-flex justify-content-center mt-4">
+  <%== pagy_bootstrap_combo_nav_js(@pagy) if @blog_posts.present?  %>
+</div>

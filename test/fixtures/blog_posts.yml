@@ -1,0 +1,23 @@
+one:
+  title: "Test Blog Post One"
+  slug: "test-blog-post-one"
+  content: "This is a test blog post."
+  cover_image: "https://picsum.photos/800/400"
+  reading_time: 5
+  featured: false
+  category: "Technology"
+  tags: [ "test, blog, post" ]
+  user: one
+  published_at: <%= 1.day.ago %>
+
+two:
+  title: "Test Blog Post Two"
+  slug: "test-blog-post-two"
+  content: "Another test blog post."
+  cover_image: "https://picsum.photos/800/400"
+  reading_time: 4
+  featured: true
+  category: "Science"
+  tags: [ "test, blog, post" ]
+  user: two
+  published_at: <%= 2.days.ago %>

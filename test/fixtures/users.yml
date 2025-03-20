@@ -1,0 +1,7 @@
+one:
+  email: unique_user_1@example.com
+  encrypted_password: <%= BCrypt::Password.create("password") %>
+
+two:
+  email: unique_user_2@example.com
+  encrypted_password: <%= BCrypt::Password.create("password") %>
