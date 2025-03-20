@@ -14,7 +14,7 @@ FROM docker.io/library/ruby:$RUBY_VERSION-slim AS base
 WORKDIR /rails
 
 # Install correct Bundler version
-RUN gem install bundler -v "~> 2.6"
+# RUN gem install bundler -v "~> 2.6"
 
 # Install base packages - Force rebuild on: 2025-03-14
 RUN apt-get update -qq && \

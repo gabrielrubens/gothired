@@ -3,8 +3,8 @@ name: CD - Deploy GotHired.ai with Kamal 2
 on:
   push:
     branches:
-      - main  # Deploy to production on main push
-      - staging  # Deploy to staging on staging push
+      - main
+      - staging
   workflow_dispatch:
     inputs:
       environment:
@@ -30,6 +30,10 @@ jobs:
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H $VPS_HOST >> ~/.ssh/known_hosts
+
+      - name: 📦 Install Correct Bundler Version
+        run: |
+          gem install bundler -v "~> 2.6"
 
       - name: 🛠 Set up Docker
         uses: docker/setup-buildx-action@v2
