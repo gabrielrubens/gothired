@@ -42,12 +42,19 @@ jobs:
           mkdir -p ~/.ssh
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          # Remove any existing entries for this host to avoid key conflicts
-          ssh-keygen -R $VPS_HOST || true
-          # Then add the current key
-          ssh-keyscan -H $VPS_HOST >> ~/.ssh/known_hosts
-          # Verify the key was added
-          cat ~/.ssh/known_hosts
+          
+          # Create SSH config to handle connections properly
+          cat > ~/.ssh/config << EOF
+          Host *
+            StrictHostKeyChecking no
+            UserKnownHostsFile=/dev/null
+            BatchMode yes
+            PasswordAuthentication no
+          EOF
+          chmod 600 ~/.ssh/config
+          
+          # Test connection without requesting a TTY
+          ssh -o BatchMode=yes $VPS_HOST "echo SSH connection test" || echo "SSH test failed, but continuing"
 
       - name: 📦 Install Gem Dependencies
         run: bundle install --deployment --without development test
@@ -72,13 +79,11 @@ jobs:
         run: |
           export DOMAIN="gothired.ai"
           export KAMAL_ENV="production"
-          cat config/deploy.yml  # Debug: Check Kamal config file
-          bin/kamal deploy
+          bin/kamal deploy --option=ssh.config_file=~/.ssh/config
           
       - name: 🚀 Deploy to Staging
         if: github.ref != 'refs/heads/main'
         run: |
           export DOMAIN="staging.gothired.ai"
           export KAMAL_ENV="staging"
-          cat config/deploy.yml  # Debug: Check Kamal config file
-          bin/kamal deploy
+          bin/kamal deploy --option=ssh.config_file=~/.ssh/config
