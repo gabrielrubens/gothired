@@ -40,6 +40,9 @@ jobs:
           echo 'export GEM_PATH="$HOME/.gem/ruby/3.2.0:/var/lib/gems/3.2.0:/usr/local/lib/ruby/gems/3.2.0:/usr/lib/ruby/gems/3.2.0"' >> $HOME/.bashrc
           source $HOME/.bashrc
 
+      - name: 📦 Install Gem Dependencies
+        run: bundle install --deployment --without development test
+
       - name: 🛠 Set up Docker
         uses: docker/setup-buildx-action@v2
 
