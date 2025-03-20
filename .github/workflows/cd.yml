@@ -33,6 +33,12 @@ jobs:
 
       - name: 📦 Install Kamal
         run: gem install kamal
+        # - name: Install Kamal
+        # run: gem install --user-install kamal # Use this if you don't have sudo access
+        run: |
+          export GEM_HOME="$HOME/.gem"
+          export PATH="$GEM_HOME/bin:$PATH"
+          gem install kamal
 
       - name: 🚀 Deploy to Environment
         run: |
