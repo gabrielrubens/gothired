@@ -34,11 +34,8 @@ jobs:
       - name: 📦 Install Correct Bundler Version and Set Path
         run: |
           gem install --user-install bundler -v "~> 2.6"
-          export PATH="$HOME/.gem/ruby/3.2.0/bin:$PATH"
-          export GEM_PATH="$HOME/.gem/ruby/3.2.0:/var/lib/gems/3.2.0:/usr/local/lib/ruby/gems/3.2.0:/usr/lib/ruby/gems/3.2.0"
-          echo 'export PATH="$HOME/.gem/ruby/3.2.0/bin:$PATH"' >> $HOME/.bashrc
-          echo 'export GEM_PATH="$HOME/.gem/ruby/3.2.0:/var/lib/gems/3.2.0:/usr/local/lib/ruby/gems/3.2.0:/usr/lib/ruby/gems/3.2.0"' >> $HOME/.bashrc
-          source $HOME/.bashrc
+          echo "PATH=$HOME/.gem/ruby/3.2.0/bin:$PATH" >> $GITHUB_ENV
+          echo "GEM_PATH=$HOME/.gem/ruby/3.2.0:/var/lib/gems/3.2.0:/usr/local/lib/ruby/gems/3.2.0:/usr/lib/ruby/gems/3.2.0" >> $GITHUB_ENV
 
       - name: 📦 Install Gem Dependencies
         run: bundle install --deployment --without development test
