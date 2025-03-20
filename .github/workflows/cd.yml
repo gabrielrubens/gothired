@@ -62,7 +62,14 @@ jobs:
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
 
-      - name: 🚀 Deploy using Kamal
+      - name: 🚀 Deploy to Production
+        if: github.ref == 'refs/heads/main'
         env:
-          KAMAL_ENV: "${{ github.ref == 'refs/heads/main' ? 'production' : 'staging' }}"
+          KAMAL_ENV: production
+        run: bin/kamal deploy
+
+      - name: 🚀 Deploy to Staging
+        if: github.ref != 'refs/heads/main'
+        env:
+          KAMAL_ENV: staging
         run: bin/kamal deploy
