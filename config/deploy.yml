@@ -58,9 +58,12 @@ env:
     # Log everything from Rails
     # RAILS_LOG_LEVEL: debug
 
-    DOMAIN:
-      production: gothired.ai
-      staging: staging.gothired.ai
+    # DOMAIN is now exported from GitHub Actions, so remove this nested structure
+    # DOMAIN:
+    #   production: gothired.ai
+    #   staging: staging.gothired.ai
+
+
 
 # Aliases are triggered with "bin/kamal <alias>". You can overwrite arguments on invocation:
 # "bin/kamal logs -r job" will tail logs from the first server in the job section.
