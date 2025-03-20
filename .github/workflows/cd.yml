@@ -42,7 +42,12 @@ jobs:
           mkdir -p ~/.ssh
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
+          # Remove any existing entries for this host to avoid key conflicts
+          ssh-keygen -R $VPS_HOST || true
+          # Then add the current key
           ssh-keyscan -H $VPS_HOST >> ~/.ssh/known_hosts
+          # Verify the key was added
+          cat ~/.ssh/known_hosts
 
       - name: 📦 Install Gem Dependencies
         run: bundle install --deployment --without development test
