@@ -24,18 +24,31 @@ jobs:
       - name: 🚀 Checkout Code
         uses: actions/checkout@v4
 
+      - name: Setup Ruby and Bundler
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.2'
+          bundler-version: '~>2.6'
+          cache-version: 3
+
+      - name: Check Ruby & Bundler Environment
+        run: |
+          echo "Ruby version:"
+          ruby -v
+          echo "Bundler location:"
+          which bundle || echo "bundle not found in PATH"
+          echo "Bundler version:"
+          bundle -v || echo "Could not run bundle -v"
+      
+      - name: Ensure Bundler is installed
+        run: gem install bundler -v "~>2.6"
+
       - name: 🔑 Setup SSH Access
         run: |
           mkdir -p ~/.ssh
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H $VPS_HOST >> ~/.ssh/known_hosts
-
-      - name: 📦 Install Correct Bundler Version and Set Path
-        run: |
-          gem install --user-install bundler -v "~> 2.6"
-          echo "PATH=$HOME/.gem/ruby/3.2.0/bin:$PATH" >> $GITHUB_ENV
-          echo "GEM_PATH=$HOME/.gem/ruby/3.2.0:/var/lib/gems/3.2.0:/usr/local/lib/ruby/gems/3.2.0:/usr/lib/ruby/gems/3.2.0" >> $GITHUB_ENV
 
       - name: 📦 Install Gem Dependencies
         run: bundle install --deployment --without development test
@@ -45,12 +58,15 @@ jobs:
 
       - name: 🔑 Log in to Docker Registry
         run: echo "$KAMAL_REGISTRY_PASSWORD" | docker login --username ${{ secrets.DOCKER_USERNAME }} --password-stdin
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
 
       - name: 📦 Build & Push Docker Image
         run: |
           docker build -t ${{ secrets.DOCKER_USERNAME }}/gothired:latest .
           docker push ${{ secrets.DOCKER_USERNAME }}/gothired:latest
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
 
       - name: 🚀 Deploy using Kamal
-        run: |
-          bin/kamal deploy --env ${{ github.ref == 'refs/heads/main' && 'production' || 'staging' }}
+        run: bin/kamal deploy --env ${{ github.ref == 'refs/heads/main' && 'production' || 'staging' }}
