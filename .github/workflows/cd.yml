@@ -31,22 +31,17 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H $VPS_HOST >> ~/.ssh/known_hosts
 
-      - name: 📦 Install Ruby and Bundler
-        run: |
-          export GEM_HOME="$HOME/.gem"
-          export PATH="$GEM_HOME/bin:$PATH"
-          gem install bundler -v '~> 2.6'
-          echo "$HOME/.gem/bin" >> $GITHUB_PATH
+      - name: 🛠 Set up Docker
+        uses: docker/setup-buildx-action@v2
 
-      - name: 📦 Install Kamal
-        run: |
-          gem install kamal
-          echo "$HOME/.gem/bin" >> $GITHUB_PATH
+      - name: 🔑 Log in to Docker Registry
+        run: echo "$KAMAL_REGISTRY_PASSWORD" | docker login --username ${{ secrets.DOCKER_USERNAME }} --password-stdin
 
-      - name: 🚀 Deploy to Environment
+      - name: 📦 Build & Push Docker Image
         run: |
-          if [ "${{ github.ref }}" == "refs/heads/main" ]; then
-            bin/kamal deploy --env production
-          else
-            bin/kamal deploy --env staging
-          fi
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/gothired:latest .
+          docker push ${{ secrets.DOCKER_USERNAME }}/gothired:latest
+
+      - name: 🚀 Deploy using Kamal
+        run: |
+          bin/kamal deploy --env ${{ github.ref == 'refs/heads/main' && 'production' || 'staging' }}
