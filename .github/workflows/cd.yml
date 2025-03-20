@@ -24,24 +24,18 @@ jobs:
       - name: 🚀 Checkout Code
         uses: actions/checkout@v4
 
-      - name: Setup Ruby and Bundler
+      - name: 💎 Setup Ruby and Bundler
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.2'
           bundler-version: '~>2.6'
           cache-version: 3
 
-      - name: Check Ruby & Bundler Environment
+      - name: 🔎 Check Ruby & Bundler Environment
         run: |
-          echo "Ruby version:"
-          ruby -v
-          echo "Bundler location:"
-          which bundle || echo "bundle not found in PATH"
-          echo "Bundler version:"
-          bundle -v || echo "Could not run bundle -v"
-      
-      - name: Ensure Bundler is installed
-        run: gem install bundler -v "~>2.6"
+          echo "Ruby version: $(ruby -v)"
+          echo "Bundle location: $(which bundle || echo 'not found')"
+          bundle -v
 
       - name: 🔑 Setup SSH Access
         run: |
@@ -69,4 +63,6 @@ jobs:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
 
       - name: 🚀 Deploy using Kamal
-        run: bin/kamal deploy --env ${{ github.ref == 'refs/heads/main' && 'production' || 'staging' }}
+        env:
+          KAMAL_ENV: ${{ github.ref == 'refs/heads/main' ? 'production' : 'staging' }}
+        run: bin/kamal deploy
