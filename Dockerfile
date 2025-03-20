@@ -58,7 +58,7 @@ RUN bundle install && \
 COPY . .
 
 # Ensure JavaScript dependencies are installed
-RUN corepack enable && yarn install --check-files
+RUN corepack enable && yarn install --immutable
 
 # Precompile bootsnap code for faster boot times
 RUN bundle exec bootsnap precompile app/ lib/
