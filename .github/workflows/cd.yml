@@ -66,12 +66,18 @@ jobs:
         if: github.ref == 'refs/heads/main'
         env:
           KAMAL_ENV: production
-          DOMAIN: ${{ secrets.PRODUCTION_DOMAIN }}
-        run: bin/kamal deploy
+          DOMAIN: gothired.ai
+        run: |
+          echo "Debug - DOMAIN value: $DOMAIN"
+          echo "DOMAIN=$DOMAIN" >> $GITHUB_ENV
+          bin/kamal deploy --option domain=$DOMAIN
 
       - name: 🚀 Deploy to Staging
         if: github.ref != 'refs/heads/main'
         env:
           KAMAL_ENV: staging
-          DOMAIN: ${{ secrets.STAGING_DOMAIN }}
-        run: bin/kamal deploy
+          DOMAIN: staging.gothired.ai
+        run: |
+          echo "Debug - DOMAIN value: $DOMAIN"
+          echo "DOMAIN=$DOMAIN" >> $GITHUB_ENV
+          bin/kamal deploy --option domain=$DOMAIN
