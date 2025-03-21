@@ -1,7 +1,7 @@
 # config/deploy.yml
 
 # Name of your application. Used to uniquely configure containers.
-service: gothired
+service: gothired-staging
 
 # Name of the container image.
 image: gabrielrubens/gothired
@@ -20,7 +20,7 @@ servers:
 # (If using Cloudflare, ensure SSL/TLS mode is set to "Full" for CF-to-app encryption.)
 proxy:
   ssl: true
-  host: <%= ENV.fetch('DOMAIN', 'gothired.ai') %>  # Will use DOMAIN from your CI/CD; defaults to 'gothired.ai'
+  host: staging.gothired.ai  # Will use DOMAIN from your CI/CD; defaults to 'gothired.ai'
 
 # Credentials for your image host.
 registry:
