@@ -16,7 +16,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     env:
-      VPS_HOST: ${{ secrets.VPS_HOST }}
+      VPS_HOST: ${{ secrets.VPS_HOST }}   # e.g. "deployer@46.202.173.58"
       SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
       KAMAL_REGISTRY_PASSWORD: ${{ secrets.KAMAL_REGISTRY_PASSWORD }}
 
@@ -42,11 +42,11 @@ jobs:
           mkdir -p ~/.ssh
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          # Extract hostname from VPS_HOST (e.g. "deployer@46.202.173.58" -> "46.202.173.58")
+          # Extract hostname from VPS_HOST (e.g., "deployer@46.202.173.58" -> "46.202.173.58")
           host=$(echo "$VPS_HOST" | awk -F'@' '{print $NF}')
           ssh-keyscan -H "$host" >> ~/.ssh/known_hosts
 
-          # Create SSH config to handle connections properly
+          # Create SSH config for non-interactive sessions.
           cat > ~/.ssh/config << EOF
           Host *
             StrictHostKeyChecking no
@@ -54,9 +54,9 @@ jobs:
             BatchMode yes
             PasswordAuthentication no
           EOF
-              chmod 600 ~/.ssh/config
+          chmod 600 ~/.ssh/config
 
-          # Test connection without requesting a TTY
+          # Test the SSH connection.
           ssh -o BatchMode=yes "$VPS_HOST" "echo SSH connection test" || echo "SSH test failed, but continuing"
 
       - name: 📦 Install Gem Dependencies
