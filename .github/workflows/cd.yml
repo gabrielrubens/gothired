@@ -80,13 +80,9 @@ jobs:
       - name: 🚀 Deploy to Production
         if: github.ref == 'refs/heads/main'
         run: |
-          export DOMAIN="gothired.ai"
-          export KAMAL_ENV="production"
-          bin/kamal deploy
+          bin/kamal deploy -d production
           
       - name: 🚀 Deploy to Staging
         if: github.ref != 'refs/heads/main'
         run: |
-          export DOMAIN="staging.gothired.ai"
-          export KAMAL_ENV="staging"
-          bin/kamal deploy
+          bin/kamal deploy -d staging
