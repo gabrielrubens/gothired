@@ -51,6 +51,7 @@ jobs:
   lint:
     name: 🎨 Lint Ruby & JavaScript
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -70,7 +71,7 @@ jobs:
         run: bin/rubocop -f github
 
   test:
-    name: 🧪 Run Tests
+    name: 🧪 Run Tests with Coverage
     runs-on: ubuntu-latest
 
     steps:
@@ -103,3 +104,15 @@ jobs:
           name: failed-test-screenshots
           path: tmp/screenshots
           if-no-files-found: ignore
+
+      - name: 📊 Upload Code Coverage Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: coverage/
+          if-no-files-found: ignore
+
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
