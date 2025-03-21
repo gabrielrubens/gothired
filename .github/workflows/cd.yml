@@ -70,8 +70,7 @@ jobs:
           echo "$KAMAL_REGISTRY_PASSWORD" | docker login --username ${{ secrets.DOCKER_USERNAME }} --password-stdin
           # Create secrets file for Kamal
           mkdir -p .kamal
-          echo "KAMAL_REGISTRY_PASSWORD=$KAMAL_REGISTRY_PASSWORD" > .kamal/secrets.production
-          echo "KAMAL_REGISTRY_PASSWORD=$KAMAL_REGISTRY_PASSWORD" > .kamal/secrets.staging
+          echo "KAMAL_REGISTRY_PASSWORD=$KAMAL_REGISTRY_PASSWORD" > .kamal/secrets
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
 
