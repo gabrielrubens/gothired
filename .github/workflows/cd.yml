@@ -66,7 +66,11 @@ jobs:
         uses: docker/setup-buildx-action@v2
 
       - name: 🔑 Log in to Docker Registry
-        run: echo "$KAMAL_REGISTRY_PASSWORD" | docker login --username ${{ secrets.DOCKER_USERNAME }} --password-stdin
+        run: |
+          echo "$KAMAL_REGISTRY_PASSWORD" | docker login --username ${{ secrets.DOCKER_USERNAME }} --password-stdin
+          # Create secrets file for Kamal
+          mkdir -p .kamal
+          echo "KAMAL_REGISTRY_PASSWORD=$KAMAL_REGISTRY_PASSWORD" > .kamal/secrets
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
 
@@ -81,12 +85,10 @@ jobs:
         if: github.ref == 'refs/heads/main'
         run: |
           export DOMAIN="gothired.ai"
-          export KAMAL_ENV="production"
-          bin/kamal deploy
+          bin/kamal deploy -d production
           
       - name: 🚀 Deploy to Staging
         if: github.ref != 'refs/heads/main'
         run: |
           export DOMAIN="staging.gothired.ai"
-          export KAMAL_ENV="staging"
-          bin/kamal deploy
+          bin/kamal deploy -d staging
