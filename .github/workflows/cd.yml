@@ -80,9 +80,10 @@ jobs:
       - name: 🚀 Deploy to Production
         if: github.ref == 'refs/heads/main'
         run: |
-          bin/kamal deploy -d production
+          bin/kamal deploy -d production --registry-password=$KAMAL_REGISTRY_PASSWORD
           
       - name: 🚀 Deploy to Staging
         if: github.ref != 'refs/heads/main'
         run: |
-          bin/kamal deploy -d staging
+          export DOMAIN="staging.gothired.ai"
+          bin/kamal deploy -d staging --registry-password=$KAMAL_REGISTRY_PASSWORD
