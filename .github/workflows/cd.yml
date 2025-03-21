@@ -42,8 +42,10 @@ jobs:
           mkdir -p ~/.ssh
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -H $VPS_HOST >> ~/.ssh/known_hosts
-          
+          # Extract hostname from VPS_HOST (e.g. "deployer@46.202.173.58" -> "46.202.173.58")
+          host=$(echo "$VPS_HOST" | awk -F'@' '{print $NF}')
+          ssh-keyscan -H "$host" >> ~/.ssh/known_hosts
+
           # Create SSH config to handle connections properly
           cat > ~/.ssh/config << EOF
           Host *
@@ -52,10 +54,10 @@ jobs:
             BatchMode yes
             PasswordAuthentication no
           EOF
-          chmod 600 ~/.ssh/config
-          
+              chmod 600 ~/.ssh/config
+
           # Test connection without requesting a TTY
-          ssh -o BatchMode=yes $VPS_HOST "echo SSH connection test" || echo "SSH test failed, but continuing"
+          ssh -o BatchMode=yes "$VPS_HOST" "echo SSH connection test" || echo "SSH test failed, but continuing"
 
       - name: 📦 Install Gem Dependencies
         run: bundle install --deployment --without development test
