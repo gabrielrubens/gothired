@@ -116,3 +116,51 @@ jobs:
         uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+
+  rspec:
+    name: 🧪 Run RSpec Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Install required system packages
+        run: sudo apt-get update && sudo apt-get install --no-install-recommends -y build-essential git pkg-config
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.4.2"
+          bundler-cache: true
+
+      - name: Enable Corepack and prepare Yarn 4.7.0
+        run: |
+          corepack enable
+          corepack prepare yarn@4.7.0 --activate
+
+      - name: Setup test fixtures
+        run: |
+          mkdir -p spec/fixtures
+          # Create a sample PDF file for tests
+          echo "Sample PDF content" > spec/fixtures/sample.pdf
+
+      - name: Prepare Database & Run RSpec Tests
+        env:
+          RAILS_ENV: test
+        run: |
+          bin/rails db:test:prepare
+          bundle exec rspec
+
+      - name: Upload RSpec Coverage Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: rspec-coverage-report
+          path: coverage/
+          if-no-files-found: ignore
+
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          flags: rspec
