@@ -1,12 +1,11 @@
 require "gemini-ai"
 
 class GeminiService
-  def initialize
+  def initialize(api_key = nil)
     @gemini = Gemini.new(
       credentials: {
         service: "generative-language-api",
-
-        api_key: Rails.application.credentials.gemini.api_key
+        api_key: api_key || Rails.application.credentials.dig(:gemini, :api_key)
       },
       options: { model: "gemini-1.5-flash", server_sent_events: true }
     )
