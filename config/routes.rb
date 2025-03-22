@@ -1,11 +1,11 @@
 Rails.application.routes.draw do
+  get "profiles/show"
+  get "profiles/update"
   # get "blog/index"
   # get "blog/show"
   devise_for :users
   get "beta_signups/create"
   get "pages/home"
-  get "job_posts/index"
-  get "job_posts/show"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -21,9 +21,8 @@ Rails.application.routes.draw do
   root "pages#home"
   resources :job_posts, only: [ :index, :show ]
   resources :beta_signups, only: [ :create ]
-
-  # Blog Routes
   resources :blog, only: [ :index, :show ]
+  resource :profile, only: [ :show, :update ]
 
   # Blog Admin routes
   namespace :admin do

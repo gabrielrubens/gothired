@@ -28,7 +28,8 @@
     <%= stylesheet_link_tag :all, "data-turbo-track": "reload" %>
 
     <%= javascript_importmap_tags %>
-    
+    <%#= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
+
     <%# Google Analytics (Replace UA-XXXXX-Y with your actual ID) %>
     <% if Rails.env.production? %>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-TT8Q0QJ1PX"></script>
@@ -40,7 +41,6 @@
       
     </script>
     <% end %>
-    <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
   </head>
 
   <body class="<%= controller_name %> <%= action_name %>">

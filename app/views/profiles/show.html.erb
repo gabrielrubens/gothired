@@ -1,0 +1,17 @@
+<div class="container mt-4" data-controller="profile-upload">
+  <h1 class="mb-3">Your Profile</h1>
+
+  <%= form_with model: @user, url: profile_path, method: :patch, local: true, html: { multipart: true } do |f| %>
+    <div class="mb-3">
+      <%= f.label :cv, "Upload Your CV", class: "form-label" %>
+      <%= f.file_field :cv, class: "form-control", id: "cv-upload" %>
+      <% if @user.cv&.attached? && @user.cv&.blob&.persisted? %>
+        <p class="mt-2">📄 Current CV: <%= link_to @user.cv.filename.to_s, rails_blob_path(@user.cv, disposition: "attachment") %></p>
+        <% end %>
+    </div>
+
+    
+    <%= f.submit "Update Profile", class: "btn btn-primary", id: "submit-btn", disabled: true %>
+    
+  <% end %>
+</div>
